@@ -12,7 +12,7 @@ export class Eule {
     this._sceneToken = 0;
 
     this.ready = this._rig.ready.then(() => {
-      if (this._opts.idleOnReady) this.idle();
+      if (this._opts.idleOnReady) this._startLoop('idle');
     });
   }
 
@@ -26,22 +26,26 @@ export class Eule {
     this._rig.stage.dataset.debug = on ? 'true' : 'false';
   }
 
-  idle() {
+  async idle() {
+    await this.ready;
     if (this._loopName === 'idle') return;
     this._startLoop('idle');
   }
 
-  sleep() {
+  async sleep() {
+    await this.ready;
     if (this._loopName === 'sleep') return;
     this._startLoop('sleep');
   }
 
-  stop() {
+  async stop() {
+    await this.ready;
     this._cancelLoop();
     this._cancelScene();
   }
 
   async play(name, opts = {}) {
+    await this.ready;
     const def = ANIMATIONS[name];
     if (!def) throw new Error(`Eule: unknown animation '${name}'`);
     if (def.loop) {
@@ -65,8 +69,6 @@ export class Eule {
         this._sceneAnims = [];
         if (previousLoop && previousLoop !== 'sleep' && !this._loopName) {
           this._startLoop(previousLoop);
-        } else if (!previousLoop && this._opts.idleOnReady && !this._loopName) {
-          // no auto-resume if user never started idle
         }
       }
     }

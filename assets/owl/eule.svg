@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750">
+  <defs>
+    <style>
+      .ink { fill: #0a0a0a; }
+      .stroke {
+        fill: none;
+        stroke: #0a0a0a;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <g id="eule-root">
+    <g id="eule-wing-left">
+      <path class="stroke" stroke-width="16" d="
+        M 218 215
+        C 195 210, 178 218, 170 235
+        C 145 270, 125 320, 130 395
+        C 138 475, 175 540, 215 580
+        C 240 605, 265 615, 285 615"/>
+    </g>
+
+    <g id="eule-wing-right">
+      <path class="stroke" stroke-width="16" d="
+        M 388 215
+        C 410 200, 460 195, 530 195
+        C 590 195, 640 215, 670 240"/>
+      <path class="stroke" stroke-width="16" d="
+        M 470 410
+        C 460 470, 470 540, 510 605
+        C 545 660, 575 685, 595 695"/>
+    </g>
+
+    <g id="eule-head">
+      <path id="eule-brow" class="stroke" stroke-width="16" d="
+        M 218 215
+        C 240 230, 270 260, 295 285
+        C 308 296, 320 296, 333 282
+        C 358 258, 378 235, 388 215"/>
+
+      <g id="eule-face">
+        <g id="eule-eye-left">
+          <circle cx="209" cy="348" r="62" fill="none" stroke="#0a0a0a" stroke-width="26"/>
+          <circle id="eule-pupil-left" cx="209" cy="348" r="22" class="ink"/>
+        </g>
+
+        <g id="eule-eye-right">
+          <circle cx="440" cy="345" r="62" fill="none" stroke="#0a0a0a" stroke-width="26"/>
+          <circle id="eule-pupil-right" cx="440" cy="345" r="22" class="ink"/>
+        </g>
+
+        <g id="eule-lid-left" opacity="0">
+          <path class="ink" d="M 136 348 A 73 73 0 0 1 282 348 L 282 351 L 136 351 Z"/>
+        </g>
+        <g id="eule-lid-right" opacity="0">
+          <path class="ink" d="M 367 345 A 73 73 0 0 1 513 345 L 513 348 L 367 348 Z"/>
+        </g>
+
+        <path id="eule-beak" class="stroke"
+              d="M 305 455 Q 345 495, 385 455"
+              stroke-width="11"/>
+      </g>
+    </g>
+  </g>
+</svg>

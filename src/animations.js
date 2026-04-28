@@ -9,14 +9,14 @@ export const ANIMATIONS = {
     loop: true,
     build(rig) {
       return [
-        rig.body.animate(
+        rig.root.animate(
           triple('scaleY(1) translateY(0)',
-                 'scaleY(1.022) translateY(-1.5px)',
+                 'scaleY(1.018) translateY(-1.5px)',
                  'scaleY(1) translateY(0)'),
           { duration: 2400, iterations: Infinity, easing: 'ease-in-out' }
         ),
-        rig.head.animate(
-          triple('translateY(0)', 'translateY(-2px)', 'translateY(0)'),
+        rig.face.animate(
+          triple('translateY(0)', 'translateY(-1.5px)', 'translateY(0)'),
           { duration: 2400, iterations: Infinity, easing: 'ease-in-out' }
         ),
       ];
@@ -39,17 +39,17 @@ export const ANIMATIONS = {
     build(rig, { direction = 'left' } = {}) {
       const sign = direction === 'right' ? 1 : -1;
       const kf = [
-        { transform: 'rotateY(0deg) translateX(0)' },
-        { transform: `rotateY(${sign * 28}deg) translateX(${sign * 6}px)`, offset: 0.45 },
-        { transform: `rotateY(${sign * 28}deg) translateX(${sign * 6}px)`, offset: 0.7 },
-        { transform: 'rotateY(0deg) translateX(0)' },
+        { transform: 'translateX(0) scaleX(1)' },
+        { transform: `translateX(${sign * 16}px) scaleX(0.94)`, offset: 0.45 },
+        { transform: `translateX(${sign * 16}px) scaleX(0.94)`, offset: 0.7 },
+        { transform: 'translateX(0) scaleX(1)' },
       ];
-      return [rig.head.animate(kf, { duration: 720, easing: POP })];
+      return [rig.face.animate(kf, { duration: 720, easing: POP })];
     },
   },
 
   headTilt: {
-    build(rig, { direction = 'left', degrees = 12 } = {}) {
+    build(rig, { direction = 'left', degrees = 8 } = {}) {
       const sign = direction === 'right' ? 1 : -1;
       const kf = [
         { transform: 'rotate(0deg)' },
@@ -57,18 +57,18 @@ export const ANIMATIONS = {
         { transform: `rotate(${sign * degrees}deg)`, offset: 0.7 },
         { transform: 'rotate(0deg)' },
       ];
-      return [rig.head.animate(kf, { duration: 700, easing: POP })];
+      return [rig.face.animate(kf, { duration: 700, easing: POP })];
     },
   },
 
   nod: {
     build(rig) {
       return [
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translateY(0) rotate(0)' },
-          { transform: 'translateY(-3px) rotate(-3deg)', offset: 0.25 },
-          { transform: 'translateY(5px) rotate(4deg)',   offset: 0.55 },
-          { transform: 'translateY(-2px) rotate(-2deg)', offset: 0.8 },
+          { transform: 'translateY(-3px) rotate(-2deg)', offset: 0.25 },
+          { transform: 'translateY(6px) rotate(3deg)',   offset: 0.55 },
+          { transform: 'translateY(-2px) rotate(-1deg)', offset: 0.8 },
           { transform: 'translateY(0) rotate(0)' },
         ], { duration: 700, easing: SOFT }),
       ];
@@ -78,12 +78,12 @@ export const ANIMATIONS = {
   shake: {
     build(rig) {
       return [
-        rig.head.animate([
-          { transform: 'rotate(0)' },
-          { transform: 'rotate(-9deg)',  offset: 0.2 },
-          { transform: 'rotate(8deg)',   offset: 0.45 },
-          { transform: 'rotate(-6deg)',  offset: 0.7 },
-          { transform: 'rotate(0)' },
+        rig.face.animate([
+          { transform: 'translateX(0) rotate(0)' },
+          { transform: 'translateX(-9px) rotate(-3deg)', offset: 0.2 },
+          { transform: 'translateX(9px) rotate(3deg)',   offset: 0.45 },
+          { transform: 'translateX(-6px) rotate(-2deg)', offset: 0.7 },
+          { transform: 'translateX(0) rotate(0)' },
         ], { duration: 620, easing: SNAP }),
       ];
     },
@@ -92,11 +92,11 @@ export const ANIMATIONS = {
   lookUp: {
     build(rig) {
       return [
-        rig.head.animate([
-          { transform: 'translateY(0) rotate(0)' },
-          { transform: 'translateY(-5px) rotate(-2deg)', offset: 0.4 },
-          { transform: 'translateY(-5px) rotate(-2deg)', offset: 0.7 },
-          { transform: 'translateY(0) rotate(0)' },
+        rig.face.animate([
+          { transform: 'translateY(0)' },
+          { transform: 'translateY(-7px)', offset: 0.4 },
+          { transform: 'translateY(-7px)', offset: 0.7 },
+          { transform: 'translateY(0)' },
         ], { duration: 600, easing: POP }),
       ];
     },
@@ -105,11 +105,11 @@ export const ANIMATIONS = {
   lookDown: {
     build(rig) {
       return [
-        rig.head.animate([
-          { transform: 'translateY(0) rotate(0)' },
-          { transform: 'translateY(6px) rotate(3deg)', offset: 0.4 },
-          { transform: 'translateY(6px) rotate(3deg)', offset: 0.7 },
-          { transform: 'translateY(0) rotate(0)' },
+        rig.face.animate([
+          { transform: 'translateY(0)' },
+          { transform: 'translateY(8px)', offset: 0.4 },
+          { transform: 'translateY(8px)', offset: 0.7 },
+          { transform: 'translateY(0)' },
         ], { duration: 600, easing: POP }),
       ];
     },
@@ -118,11 +118,11 @@ export const ANIMATIONS = {
   preen: {
     build(rig) {
       return [
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translate(0,0) rotate(0)' },
-          { transform: 'translate(40px,28px) rotate(38deg)', offset: 0.35 },
-          { transform: 'translate(38px,32px) rotate(44deg)', offset: 0.55 },
-          { transform: 'translate(20px,18px) rotate(20deg)', offset: 0.75 },
+          { transform: 'translate(28px,16px) rotate(12deg)', offset: 0.35 },
+          { transform: 'translate(30px,18px) rotate(14deg)', offset: 0.55 },
+          { transform: 'translate(14px,9px) rotate(7deg)',   offset: 0.75 },
           { transform: 'translate(0,0) rotate(0)' },
         ], { duration: 1200, easing: SOFT }),
         rig.wingRight.animate([
@@ -138,17 +138,17 @@ export const ANIMATIONS = {
   yawn: {
     build(rig) {
       return [
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translateY(0) rotate(0)' },
-          { transform: 'translateY(-3px) rotate(-4deg)', offset: 0.4 },
-          { transform: 'translateY(-3px) rotate(-4deg)', offset: 0.7 },
+          { transform: 'translateY(-3px) rotate(-2deg)', offset: 0.4 },
+          { transform: 'translateY(-3px) rotate(-2deg)', offset: 0.7 },
           { transform: 'translateY(0) rotate(0)' },
         ], { duration: 900, easing: SOFT }),
         rig.beak.animate([
-          { transform: 'scaleY(1) translateY(0)' },
-          { transform: 'scaleY(2.6) translateY(8px)', offset: 0.4 },
-          { transform: 'scaleY(2.6) translateY(8px)', offset: 0.7 },
-          { transform: 'scaleY(1) translateY(0)' },
+          { transform: 'scale(1, 1) translateY(0)' },
+          { transform: 'scale(1.4, 2.6) translateY(8px)', offset: 0.4 },
+          { transform: 'scale(1.4, 2.6) translateY(8px)', offset: 0.7 },
+          { transform: 'scale(1, 1) translateY(0)' },
         ], { duration: 900, easing: SOFT }),
       ];
     },
@@ -165,29 +165,23 @@ export const ANIMATIONS = {
         { transform: 'translateX(-1px)', offset: 0.8 },
         { transform: 'translateX(0)' },
       ];
-      const opts = { duration: 380, easing: 'linear' };
-      return [
-        rig.body.animate(kf, opts),
-        rig.head.animate(kf, opts),
-        rig.wingLeft.animate(kf, opts),
-        rig.wingRight.animate(kf, opts),
-      ];
+      return [rig.root.animate(kf, { duration: 380, easing: 'linear' })];
     },
   },
 
   alert: {
     build(rig) {
       return [
-        rig.body.animate([
+        rig.root.animate([
           { transform: 'scaleY(1) translateY(0)' },
           { transform: 'scaleY(1.04) translateY(-4px)', offset: 0.35 },
           { transform: 'scaleY(1.04) translateY(-4px)', offset: 0.75 },
           { transform: 'scaleY(1) translateY(0)' },
         ], { duration: 520, easing: POP }),
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translateY(0) scale(1)' },
-          { transform: 'translateY(-4px) scale(1.03)', offset: 0.35 },
-          { transform: 'translateY(-4px) scale(1.03)', offset: 0.75 },
+          { transform: 'translateY(-3px) scale(1.04)', offset: 0.35 },
+          { transform: 'translateY(-3px) scale(1.04)', offset: 0.75 },
           { transform: 'translateY(0) scale(1)' },
         ], { duration: 520, easing: POP }),
       ];
@@ -198,12 +192,14 @@ export const ANIMATIONS = {
     build(rig) {
       const left = [
         { transform: 'rotate(0)' },
-        { transform: 'rotate(-10deg)', offset: 0.25 },
-        { transform: 'rotate(6deg)',   offset: 0.5 },
-        { transform: 'rotate(-8deg)',  offset: 0.75 },
+        { transform: 'rotate(-9deg)', offset: 0.25 },
+        { transform: 'rotate(5deg)',  offset: 0.5 },
+        { transform: 'rotate(-7deg)', offset: 0.75 },
         { transform: 'rotate(0)' },
       ];
-      const right = left.map(k => ({ transform: k.transform.replace('rotate(', 'rotate(').replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/, (_, d) => `rotate(${-parseFloat(d)}deg)`) }));
+      const right = left.map(k => ({
+        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/, (_, d) => `rotate(${-parseFloat(d)}deg)`),
+      }));
       const opts = { duration: 460, easing: SNAP };
       return [
         rig.wingLeft.animate(left, opts),
@@ -218,10 +214,10 @@ export const ANIMATIONS = {
       const sign = side === 'right' ? 1 : -1;
       return [
         wing.animate([
-          { transform: 'rotate(0) scale(1)' },
-          { transform: `rotate(${sign * 28}deg) scale(1.06)`, offset: 0.4 },
-          { transform: `rotate(${sign * 28}deg) scale(1.06)`, offset: 0.7 },
-          { transform: 'rotate(0) scale(1)' },
+          { transform: 'rotate(0)' },
+          { transform: `rotate(${sign * 18}deg)`, offset: 0.4 },
+          { transform: `rotate(${sign * 18}deg)`, offset: 0.7 },
+          { transform: 'rotate(0)' },
         ], { duration: 760, easing: POP }),
       ];
     },
@@ -247,7 +243,7 @@ export const ANIMATIONS = {
       const opts = { duration: 700, easing: SOFT };
       return [
         rig.stage.animate(lift, opts),
-        rig.body.animate(squash, opts),
+        rig.root.animate(squash, opts),
       ];
     },
   },
@@ -255,16 +251,16 @@ export const ANIMATIONS = {
   bow: {
     build(rig) {
       return [
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translateY(0) rotate(0)' },
-          { transform: 'translateY(10px) rotate(8deg)', offset: 0.45 },
-          { transform: 'translateY(10px) rotate(8deg)', offset: 0.7 },
+          { transform: 'translateY(8px) rotate(5deg)', offset: 0.45 },
+          { transform: 'translateY(8px) rotate(5deg)', offset: 0.7 },
           { transform: 'translateY(0) rotate(0)' },
         ], { duration: 700, easing: SOFT }),
-        rig.body.animate([
+        rig.root.animate([
           { transform: 'rotate(0)' },
-          { transform: 'rotate(3deg)', offset: 0.45 },
-          { transform: 'rotate(3deg)', offset: 0.7 },
+          { transform: 'rotate(2deg)', offset: 0.45 },
+          { transform: 'rotate(2deg)', offset: 0.7 },
           { transform: 'rotate(0)' },
         ], { duration: 700, easing: SOFT }),
       ];
@@ -274,16 +270,16 @@ export const ANIMATIONS = {
   deepBreath: {
     build(rig) {
       return [
-        rig.body.animate([
+        rig.root.animate([
           { transform: 'scaleY(1) translateY(0)' },
           { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.45 },
           { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.55 },
           { transform: 'scaleY(1) translateY(0)' },
         ], { duration: 1800, easing: 'ease-in-out' }),
-        rig.head.animate([
+        rig.face.animate([
           { transform: 'translateY(0)' },
-          { transform: 'translateY(-6px)', offset: 0.45 },
-          { transform: 'translateY(-6px)', offset: 0.55 },
+          { transform: 'translateY(-4px)', offset: 0.45 },
+          { transform: 'translateY(-4px)', offset: 0.55 },
           { transform: 'translateY(0)' },
         ], { duration: 1800, easing: 'ease-in-out' }),
       ];
@@ -300,8 +296,7 @@ export const ANIMATIONS = {
         { transform: 'rotate(0)' },
       ];
       const flapRight = flap.map(k => ({
-        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/,
-          (_, d) => `rotate(${-parseFloat(d)}deg)`)
+        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/, (_, d) => `rotate(${-parseFloat(d)}deg)`),
       }));
       const flapOpts = { duration: 380, iterations: 5, easing: SOFT };
       const path = [
@@ -329,8 +324,7 @@ export const ANIMATIONS = {
         { transform: 'rotate(0)' },
       ];
       const flapRight = flap.map(k => ({
-        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/,
-          (_, d) => `rotate(${-parseFloat(d)}deg)`)
+        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/, (_, d) => `rotate(${-parseFloat(d)}deg)`),
       }));
       const flapOpts = { duration: 280, iterations: 4, easing: SOFT };
       return [
@@ -357,16 +351,15 @@ export const ANIMATIONS = {
         { transform: 'rotate(0)' },
       ];
       const flapRight = flap.map(k => ({
-        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/,
-          (_, d) => `rotate(${-parseFloat(d)}deg)`)
+        transform: k.transform.replace(/rotate\((-?\d+(?:\.\d+)?)deg\)/, (_, d) => `rotate(${-parseFloat(d)}deg)`),
       }));
       const flapOpts = { duration: 280, iterations: 4, easing: SOFT };
       return [
         rig.stage.animate([
-          { transform: 'translate(0,0) scale(1)',            opacity: 1 },
-          { transform: 'translate(20px,-20px) scale(1.02)',  offset: 0.15 },
-          { transform: 'translate(140px,-160px) scale(0.85)',offset: 0.6 },
-          { transform: 'translate(280px,-300px) scale(0.55)',opacity: 0, offset: 1 },
+          { transform: 'translate(0,0) scale(1)',             opacity: 1 },
+          { transform: 'translate(20px,-20px) scale(1.02)',   offset: 0.15 },
+          { transform: 'translate(140px,-160px) scale(0.85)', offset: 0.6 },
+          { transform: 'translate(280px,-300px) scale(0.55)', opacity: 0, offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
         rig.wingLeft.animate(flap, flapOpts),
         rig.wingRight.animate(flapRight, flapOpts),
@@ -386,11 +379,11 @@ export const ANIMATIONS = {
           [{ opacity: 0 }, { opacity: 1 }],
           { duration: 600, fill: 'forwards', easing: SOFT }
         ),
-        rig.head.animate(
-          triple('translateY(0)', 'translateY(4px)', 'translateY(4px)'),
+        rig.face.animate(
+          triple('translateY(0)', 'translateY(3px)', 'translateY(3px)'),
           { duration: 600, fill: 'forwards', easing: SOFT }
         ),
-        rig.body.animate(
+        rig.root.animate(
           triple('scaleY(1) translateY(0)',
                  'scaleY(1.012) translateY(-1px)',
                  'scaleY(1) translateY(0)'),

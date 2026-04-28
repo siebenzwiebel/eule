@@ -6,43 +6,36 @@
   display: inline-block;
   user-select: none;
   -webkit-user-select: none;
-  perspective: 1000px;
 }
 
-.eule-stage * {
-  pointer-events: none;
-}
+.eule-stage * { pointer-events: none; }
 
-.eule-layer {
-  position: absolute;
-  inset: 0;
+.eule-svg {
   width: 100%;
   height: 100%;
   display: block;
+  overflow: visible;
+}
+
+.eule-svg [id^="eule-"] {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
   will-change: transform, opacity;
 }
 
-.eule-head {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 65%;
-  will-change: transform;
-}
+.eule-svg #eule-root         { transform-origin: 375px 700px; }
+.eule-svg #eule-head         { transform-origin: 300px 460px; }
+.eule-svg #eule-face         { transform-origin: 325px 400px; }
+.eule-svg #eule-wing-left    { transform-origin: 218px 215px; }
+.eule-svg #eule-wing-right   { transform-origin: 388px 215px; }
+.eule-svg #eule-eye-left     { transform-origin: 209px 348px; }
+.eule-svg #eule-eye-right    { transform-origin: 440px 345px; }
+.eule-svg #eule-lid-left     { transform-origin: 209px 348px; }
+.eule-svg #eule-lid-right    { transform-origin: 440px 345px; }
+.eule-svg #eule-beak         { transform-origin: 345px 460px; }
+.eule-svg #eule-pupil-left   { transform-origin: 209px 348px; }
+.eule-svg #eule-pupil-right  { transform-origin: 440px 345px; }
 
-.eule-body       { transform-origin: 50% 92%; }
-.eule-wing-left  { transform-origin: 25% 22%; }
-.eule-wing-right { transform-origin: 75% 22%; }
-.eule-eye-left   { transform-origin: 37.5% 46.7%; }
-.eule-eye-right  { transform-origin: 62.5% 46.7%; }
-.eule-lid-left   { transform-origin: 37.5% 46.7%; opacity: 0; }
-.eule-lid-right  { transform-origin: 62.5% 46.7%; opacity: 0; }
-.eule-beak       { transform-origin: 50% 66%; }
-
-.eule-stage[data-debug="true"] .eule-layer {
+.eule-stage[data-debug="true"] .eule-svg [id^="eule-"] {
   outline: 1px dashed rgba(255, 64, 129, 0.55);
-}
-.eule-stage[data-debug="true"] .eule-head {
-  outline: 1px dashed rgba(64, 196, 255, 0.55);
 }
