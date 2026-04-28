@@ -23,8 +23,8 @@
   will-change: transform, opacity;
 }
 
-.eule-svg #eule-root        { transform-origin: 375px 700px; }
-.eule-svg #eule-silhouette  { transform-origin: 375px 460px; }
+.eule-svg #eule-root        { transform-origin: 391px 450px; }
+.eule-svg #eule-silhouette  { transform-origin: 391px 450px; }
 .eule-svg #eule-pupil-left  { transform-origin: 209px 348px; }
 .eule-svg #eule-pupil-right { transform-origin: 440px 345px; }
 .eule-svg #eule-lid-left    { transform-origin: 209px 348px; }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="97 157 587 587">
   <g id="eule-coordspace" transform="translate(0,750) scale(1,-1)">
     <g id="eule-root">
       <g id="eule-silhouette">
@@ -42,12 +42,12 @@
         <path d="M434 434 c-24 -5 -32 -35 -14 -52 16 -14 40 -9 49 9 3 8 3 21 -1 28
 -7 12 -21 18 -34 15z" fill="#0a0a0a"/>
       </g>
+      <g id="eule-lid-left" opacity="0">
+        <ellipse cx="209" cy="402" rx="75" ry="75" fill="#0a0a0a"/>
+      </g>
+      <g id="eule-lid-right" opacity="0">
+        <ellipse cx="440" cy="405" rx="75" ry="75" fill="#0a0a0a"/>
+      </g>
     </g>
-  </g>
-  <g id="eule-lid-left" opacity="0">
-    <ellipse cx="209" cy="348" rx="75" ry="75" fill="#0a0a0a"/>
-  </g>
-  <g id="eule-lid-right" opacity="0">
-    <ellipse cx="440" cy="345" rx="75" ry="75" fill="#0a0a0a"/>
   </g>
 </svg>
