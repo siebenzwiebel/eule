@@ -37,6 +37,18 @@ export function buildRig(target, options = {}) {
     svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svgEl.removeAttribute('width');
     svgEl.removeAttribute('height');
+
+    // Tight square viewBox around the actual content so the owl is centered
+    // inside the stage and nothing renders outside it.
+    document.body.appendChild(svgEl); // getBBox needs the element to be in the DOM
+    const root = svgEl.getElementById('eule-root');
+    const bb = root.getBBox();
+    const side = Math.max(bb.width, bb.height) * 1.05;
+    const cx = bb.x + bb.width / 2;
+    const cy = bb.y + bb.height / 2;
+    svgEl.setAttribute('viewBox', `${cx - side / 2} ${cy - side / 2} ${side} ${side}`);
+    stage.appendChild(svgEl);
+
     return svgEl;
   });
 
