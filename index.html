@@ -15,10 +15,9 @@
       justify-content: center;
       overflow: hidden;
     }
-    #mount {
-      width: 100vmin;
-      height: 100vmin;
-    }
+    #mount { width: 100vmin; height: 100vmin; }
+    /* White owl on dark background */
+    .eule-svg { filter: invert(1); }
   </style>
 </head>
 <body>
@@ -26,10 +25,23 @@
   <script type="module">
     import { Eule } from './src/eule.js';
 
-    const eule = new Eule(document.getElementById('mount'), { size: Math.min(window.innerWidth, window.innerHeight) });
+    const eule = new Eule(document.getElementById('mount'), {
+      size: Math.min(window.innerWidth, window.innerHeight),
+    });
     window.eule = eule;
-
     await eule.ready;
+
+    // Listen for commands from controls.html
+    const ch = new BroadcastChannel('eule');
+    ch.onmessage = ({ data }) => {
+      if (data.type === 'cycle') eule.cycle(data.opts);
+      else if (data.type === 'play')  eule.play(data.name, data.opts ?? {});
+      else if (data.type === 'stop')  eule.stop();
+      // Reply so controls.html shows "verbunden"
+      ch.postMessage({ type: 'ping' });
+    };
+
+    // Auto-start
     eule.cycle();
   </script>
 </body>

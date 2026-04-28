@@ -7,110 +7,84 @@
   <link rel="stylesheet" href="src/style.css">
   <style>
     :root {
-      --fg: #1a1a1a;
-      --muted: #666;
-      --line: #dcdcdc;
-      --bg: #f6f6f4;
-      --accent: #1d4ed8;
+      --fg: #1a1a1a; --muted: #666; --line: #dcdcdc;
+      --bg: #f6f6f4; --accent: #1d4ed8;
     }
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0;
       font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      color: var(--fg);
-      background: var(--bg);
-      min-height: 100vh;
+      color: var(--fg); background: var(--bg); min-height: 100vh;
     }
     .topbar {
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--line);
-      background: #fff;
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
+      padding: 14px 20px; border-bottom: 1px solid var(--line);
+      background: #fff; display: flex; align-items: center; gap: 10px;
     }
-    .topbar h1 { margin: 0; font-size: 16px; font-weight: 600; }
-    .topbar a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .topbar h1 { margin: 0; font-size: 15px; font-weight: 600; flex: 1; }
     .layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
-      min-height: calc(100vh - 54px);
+      grid-template-columns: 1fr 300px;
+      min-height: calc(100vh - 50px);
     }
     .stage-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
+      display: flex; align-items: center; justify-content: center; padding: 28px;
     }
     .stage-bg {
-      width: 100%;
-      height: 100%;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      overflow: hidden;
+      width: 100%; height: 100%; min-height: 460px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; border: 1px solid var(--line);
       background-color: #fff;
       background-image:
-        linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
-        linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
-        linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+        linear-gradient(45deg,#e0e0e0 25%,transparent 25%),
+        linear-gradient(-45deg,#e0e0e0 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#e0e0e0 75%),
+        linear-gradient(-45deg,transparent 75%,#e0e0e0 75%);
       background-size: 22px 22px;
-      background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+      background-position: 0 0,0 11px,11px -11px,-11px 0;
     }
     .controls {
-      border-left: 1px solid var(--line);
-      padding: 16px 20px;
-      background: #fff;
-      overflow-y: auto;
-      max-height: calc(100vh - 54px);
+      border-left: 1px solid var(--line); padding: 14px 18px;
+      background: #fff; overflow-y: auto; max-height: calc(100vh - 50px);
     }
     fieldset {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 10px 12px 12px;
-      margin: 0 0 12px;
+      border: 1px solid var(--line); border-radius: 9px;
+      padding: 9px 11px 11px; margin: 0 0 10px;
     }
     legend {
-      padding: 0 5px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+      padding: 0 5px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted);
     }
-    .row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .col { display: flex; flex-direction: column; gap: 8px; }
+    .row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .col { display: flex; flex-direction: column; gap: 7px; }
     button {
-      font: inherit;
-      padding: 6px 12px;
-      border-radius: 7px;
-      border: 1px solid var(--line);
-      background: #fafafa;
-      cursor: pointer;
-      color: var(--fg);
-      transition: background 100ms;
+      font: inherit; padding: 5px 11px; border-radius: 7px;
+      border: 1px solid var(--line); background: #fafafa;
+      cursor: pointer; color: var(--fg); transition: background 90ms;
     }
     button:hover { background: #f0f0ed; border-color: #c5c5c5; }
-    button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    button.primary:hover { filter: brightness(1.1); }
     button.danger { color: #b91c1c; border-color: #fca5a5; }
     button.danger:hover { background: #fee2e2; }
     input[type="range"] { width: 100%; }
     output { font-size: 12px; color: var(--muted); }
     label { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
-    .check-group { display: flex; flex-direction: column; gap: 5px; }
-    .dial-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-    .dial { width: 60px; height: 60px; flex: 0 0 60px; }
+    .check-group { display: flex; flex-direction: column; gap: 4px; }
+    .dial-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .dial { width: 56px; height: 56px; flex: 0 0 56px; }
     .dial svg { display: block; }
-    .dial-row label { flex: 1; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .dial-row label {
+      flex: 1; flex-direction: column; gap: 2px; font-size: 11px;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+    }
+    .status { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .status.live { color: #16a34a; }
   </style>
 </head>
 <body>
   <header class="topbar">
     <h1>eule · controls</h1>
-    <a href="index.html">← vollbild</a>
+    <button class="primary" id="btn-open-fullscreen">Vollbild öffnen ↗</button>
   </header>
 
   <main class="layout">
@@ -126,15 +100,16 @@
         <legend>zyklus</legend>
         <div class="col">
           <div class="row">
-            <button id="btn-cycle">▶ starten</button>
-            <button id="btn-stop" class="danger">◼ stopp</button>
+            <button class="primary" id="btn-cycle">▶ starten</button>
+            <button class="danger" id="btn-stop">◼ stopp</button>
           </div>
+          <div id="fullscreen-status" class="status">Vollbild: nicht verbunden</div>
 
           <div class="check-group" id="idle-checks">
-            <label><input type="checkbox" value="nod" checked> nod</label>
+            <label><input type="checkbox" value="nod"      checked> nod</label>
             <label><input type="checkbox" value="headTilt" checked> headTilt</label>
-            <label><input type="checkbox" value="shake" checked> shake</label>
-            <label><input type="checkbox" value="hop" checked> hop</label>
+            <label><input type="checkbox" value="shake"    checked> shake</label>
+            <label><input type="checkbox" value="hop"      checked> hop</label>
             <label><input type="checkbox" value="blink"> blink</label>
           </div>
 
@@ -152,7 +127,7 @@
 
           <div class="dial-row">
             <div class="dial">
-              <svg viewBox="-50 -50 100 100" id="dial-svg">
+              <svg viewBox="-50 -50 100 100">
                 <circle r="44" fill="none" stroke="#dcdcdc" stroke-width="2"/>
                 <circle r="3" fill="#888"/>
                 <line id="dial-needle" x1="0" y1="0" x2="40" y2="0"
@@ -160,7 +135,7 @@
               </svg>
             </div>
             <label>
-              winkel
+              flyin-winkel
               <input type="range" id="fly-angle" min="0" max="359" value="135">
               <output id="fly-angle-out">135°</output>
             </label>
@@ -169,7 +144,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>einzeln testen</legend>
+        <legend>einzeln</legend>
         <div class="row" id="anim-btns"></div>
       </fieldset>
 
@@ -184,9 +159,31 @@
   <script type="module">
     import { Eule, ANIMATION_NAMES } from './src/eule.js';
 
-    const eule = new Eule(document.getElementById('mount'), { size: 400 });
+    // Local preview
+    const eule = new Eule(document.getElementById('mount'), { size: 360 });
     window.eule = eule;
     await eule.ready;
+
+    // BroadcastChannel to control fullscreen tab
+    const ch = new BroadcastChannel('eule');
+
+    // Track whether fullscreen tab is open
+    const statusEl = document.getElementById('fullscreen-status');
+    ch.onmessage = ({ data }) => {
+      if (data.type === 'ping') {
+        statusEl.textContent = 'Vollbild: verbunden ●';
+        statusEl.className = 'status live';
+      }
+    };
+
+    function send(msg) {
+      ch.postMessage(msg);
+    }
+
+    // Open fullscreen tab and start sending pings so it can report back
+    document.getElementById('btn-open-fullscreen').addEventListener('click', () => {
+      window.open('index.html', 'eule-fullscreen');
+    });
 
     // Angle dial
     const angleInput = document.getElementById('fly-angle');
@@ -200,51 +197,49 @@
     angleInput.addEventListener('input', updateAngle);
     updateAngle();
 
-    // Interval / duration sliders
-    const intervalInput  = document.getElementById('interval');
-    const intervalOut    = document.getElementById('interval-out');
+    const intervalInput = document.getElementById('interval');
+    const intervalOut   = document.getElementById('interval-out');
     intervalInput.addEventListener('input', () => {
       intervalOut.value = (+intervalInput.value / 1000).toFixed(1) + ' s';
     });
 
-    const durationInput  = document.getElementById('duration');
-    const durationOut    = document.getElementById('duration-out');
+    const durationInput = document.getElementById('duration');
+    const durationOut   = document.getElementById('duration-out');
     durationInput.addEventListener('input', () => {
       durationOut.value = (+durationInput.value / 1000).toFixed(0) + ' s';
     });
 
-    // Cycle controls
-    const getIdleAnims = () =>
-      [...document.querySelectorAll('#idle-checks input:checked')].map(el => el.value);
-
-    document.getElementById('btn-cycle').addEventListener('click', () => {
-      eule.cycle({
-        idleAnims:   getIdleAnims(),
-        interval:    +intervalInput.value,
-        duration:    +durationInput.value,
-        flyInAngle:  +angleInput.value,
-        flyOutAngle: (360 - +angleInput.value + 180) % 360,
-      });
+    const getOpts = () => ({
+      idleAnims:   [...document.querySelectorAll('#idle-checks input:checked')].map(el => el.value),
+      interval:    +intervalInput.value,
+      duration:    +durationInput.value,
+      flyInAngle:  +angleInput.value,
+      flyOutAngle: (+angleInput.value + 180) % 360,
     });
 
-    document.getElementById('btn-stop').addEventListener('click', () => eule.stop());
+    document.getElementById('btn-cycle').addEventListener('click', () => {
+      const opts = getOpts();
+      eule.cycle(opts);
+      send({ type: 'cycle', opts });
+    });
+
+    document.getElementById('btn-stop').addEventListener('click', () => {
+      eule.stop();
+      send({ type: 'stop' });
+    });
 
     // Individual animation buttons
-    const host = document.getElementById('anim-btns');
     for (const name of ANIMATION_NAMES) {
       const btn = document.createElement('button');
       btn.textContent = name;
       btn.addEventListener('click', () => {
-        if (name === 'landIn' || name === 'flyOut') {
-          eule.play(name, { angle: +angleInput.value });
-        } else {
-          eule.play(name);
-        }
+        const opts = (name === 'landIn' || name === 'flyOut') ? { angle: +angleInput.value } : {};
+        eule.play(name, opts);
+        send({ type: 'play', name, opts });
       });
-      host.appendChild(btn);
+      document.getElementById('anim-btns').appendChild(btn);
     }
 
-    // Debug
     document.getElementById('debug').addEventListener('change', e =>
       eule.setDebug(e.target.checked)
     );
