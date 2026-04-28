@@ -130,14 +130,29 @@
               <svg viewBox="-50 -50 100 100">
                 <circle r="44" fill="none" stroke="#dcdcdc" stroke-width="2"/>
                 <circle r="3" fill="#888"/>
-                <line id="dial-needle" x1="0" y1="0" x2="40" y2="0"
+                <line id="dial-in-needle" x1="0" y1="0" x2="40" y2="0"
                       stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
               </svg>
             </div>
             <label>
               flyin-winkel
-              <input type="range" id="fly-angle" min="0" max="359" value="135">
-              <output id="fly-angle-out">135°</output>
+              <input type="range" id="fly-in-angle" min="0" max="359" value="135">
+              <output id="fly-in-angle-out">135°</output>
+            </label>
+          </div>
+          <div class="dial-row">
+            <div class="dial">
+              <svg viewBox="-50 -50 100 100">
+                <circle r="44" fill="none" stroke="#dcdcdc" stroke-width="2"/>
+                <circle r="3" fill="#888"/>
+                <line id="dial-out-needle" x1="0" y1="0" x2="40" y2="0"
+                      stroke="#e55" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <label>
+              flyout-winkel
+              <input type="range" id="fly-out-angle" min="0" max="359" value="45">
+              <output id="fly-out-angle-out">45°</output>
             </label>
           </div>
         </div>
@@ -185,17 +200,24 @@
       window.open('index.html', 'eule-fullscreen');
     });
 
-    // Angle dial
-    const angleInput = document.getElementById('fly-angle');
-    const angleOut   = document.getElementById('fly-angle-out');
-    const needle     = document.getElementById('dial-needle');
-    const updateAngle = () => {
-      const a = +angleInput.value;
-      angleOut.value = `${a}°`;
-      needle.setAttribute('transform', `rotate(${-a})`);
+    // Angle dials
+    const inAngleInput  = document.getElementById('fly-in-angle');
+    const inAngleOut    = document.getElementById('fly-in-angle-out');
+    const inNeedle      = document.getElementById('dial-in-needle');
+    const outAngleInput = document.getElementById('fly-out-angle');
+    const outAngleOut   = document.getElementById('fly-out-angle-out');
+    const outNeedle     = document.getElementById('dial-out-needle');
+
+    const updateAngles = () => {
+      const ai = +inAngleInput.value, ao = +outAngleInput.value;
+      inAngleOut.value  = `${ai}°`;
+      outAngleOut.value = `${ao}°`;
+      inNeedle.setAttribute('transform',  `rotate(${-ai})`);
+      outNeedle.setAttribute('transform', `rotate(${-ao})`);
     };
-    angleInput.addEventListener('input', updateAngle);
-    updateAngle();
+    inAngleInput.addEventListener('input',  updateAngles);
+    outAngleInput.addEventListener('input', updateAngles);
+    updateAngles();
 
     const intervalInput = document.getElementById('interval');
     const intervalOut   = document.getElementById('interval-out');
@@ -213,8 +235,8 @@
       idleAnims:   [...document.querySelectorAll('#idle-checks input:checked')].map(el => el.value),
       interval:    +intervalInput.value,
       duration:    +durationInput.value,
-      flyInAngle:  +angleInput.value,
-      flyOutAngle: (+angleInput.value + 180) % 360,
+      flyInAngle:  +inAngleInput.value,
+      flyOutAngle: +outAngleInput.value,
     });
 
     document.getElementById('btn-cycle').addEventListener('click', () => {
@@ -233,7 +255,9 @@
       const btn = document.createElement('button');
       btn.textContent = name;
       btn.addEventListener('click', () => {
-        const opts = (name === 'landIn' || name === 'flyOut') ? { angle: +angleInput.value } : {};
+        const opts = name === 'landIn'  ? { angle: +inAngleInput.value }
+                   : name === 'flyOut' ? { angle: +outAngleInput.value }
+                   : {};
         eule.play(name, opts);
         send({ type: 'play', name, opts });
       });

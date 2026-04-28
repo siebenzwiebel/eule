@@ -75,17 +75,19 @@ export const ANIMATIONS = {
   },
 
   landIn: {
-    build(rig, { angle = 135, distance = 360 } = {}) {
+    build(rig, { angle = 135, distance } = {}) {
+      // Default: enough to clear any viewport size
+      const d = distance ?? Math.max(window.innerWidth, window.innerHeight) * 1.5;
       const rad = angle * Math.PI / 180;
-      const dx = Math.cos(rad) * distance;
-      const dy = -Math.sin(rad) * distance;
-      const mx = dx * 0.45;
-      const my = dy * 0.45;
+      const dx = Math.cos(rad) * d;
+      const dy = -Math.sin(rad) * d;
+      const mx = dx * 0.35;
+      const my = dy * 0.35;
       return [
         rig.stage.animate([
-          { transform: `translate(${dx}px,${dy}px) scale(0.6)` },
-          { transform: `translate(${mx}px,${my}px) scale(0.78)`, offset: 0.3 },
-          { transform: 'translate(0,12px) scale(1.04)',           offset: 0.88 },
+          { transform: `translate(${dx}px,${dy}px) scale(0.5)` },
+          { transform: `translate(${mx}px,${my}px) scale(0.82)`, offset: 0.35 },
+          { transform: 'translate(0,10px) scale(1.04)',           offset: 0.88 },
           { transform: 'translate(0,0) scale(1)',                 offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
       ];
@@ -93,10 +95,11 @@ export const ANIMATIONS = {
   },
 
   flyOut: {
-    build(rig, { angle = 45, distance = 360 } = {}) {
+    build(rig, { angle = 45, distance } = {}) {
+      const d = distance ?? Math.max(window.innerWidth, window.innerHeight) * 1.5;
       const rad = angle * Math.PI / 180;
-      const dx = Math.cos(rad) * distance;
-      const dy = -Math.sin(rad) * distance;
+      const dx = Math.cos(rad) * d;
+      const dy = -Math.sin(rad) * d;
       return [
         rig.stage.animate([
           { transform: 'translate(0,0) scale(1)' },

@@ -14,6 +14,9 @@ export class Eule {
     this._sceneToken = 0;
     this._cycleToken = 0;
 
+    // Hide until first animation so the owl doesn't flash at center before landIn
+    this._rig.stage.style.opacity = '0';
+
     this.ready = this._rig.ready.then(() => {
       if (this._opts.idleOnReady) this._startLoop('idle');
     });
@@ -41,6 +44,7 @@ export class Eule {
     const def = ANIMATIONS[name];
     if (!def) throw new Error(`Eule: unknown animation '${name}'`);
 
+    this._rig.stage.style.opacity = ''; // reveal on first play
     this._cancelLoop();
     this._cancelScene();
 
