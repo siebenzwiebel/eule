@@ -1,23 +1,29 @@
 const LAYERS = [
-  { key: 'body',      cls: 'eule-body',      asset: 'body.svg',       parent: 'stage' },
-  { key: 'wingLeft',  cls: 'eule-wing-left', asset: 'wing-left.svg',  parent: 'stage' },
-  { key: 'wingRight', cls: 'eule-wing-right',asset: 'wing-right.svg', parent: 'stage' },
-  { key: 'eyeLeft',   cls: 'eule-eye-left',  asset: 'eye-left.svg',   parent: 'head'  },
-  { key: 'eyeRight',  cls: 'eule-eye-right', asset: 'eye-right.svg',  parent: 'head'  },
-  { key: 'lidLeft',   cls: 'eule-lid-left',  asset: 'lid-left.svg',   parent: 'head'  },
-  { key: 'lidRight',  cls: 'eule-lid-right', asset: 'lid-right.svg',  parent: 'head'  },
-  { key: 'beak',      cls: 'eule-beak',      asset: 'beak.svg',       parent: 'head'  },
+  { key: 'body',      cls: 'eule-body',       base: 'body',       parent: 'stage' },
+  { key: 'wingLeft',  cls: 'eule-wing-left',  base: 'wing-left',  parent: 'stage' },
+  { key: 'wingRight', cls: 'eule-wing-right', base: 'wing-right', parent: 'stage' },
+  { key: 'eyeLeft',   cls: 'eule-eye-left',   base: 'eye-left',   parent: 'head'  },
+  { key: 'eyeRight',  cls: 'eule-eye-right',  base: 'eye-right',  parent: 'head'  },
+  { key: 'lidLeft',   cls: 'eule-lid-left',   base: 'lid-left',   parent: 'head'  },
+  { key: 'lidRight',  cls: 'eule-lid-right',  base: 'lid-right',  parent: 'head'  },
+  { key: 'beak',      cls: 'eule-beak',       base: 'beak',       parent: 'head'  },
 ];
+
+const PRESETS = {
+  owl:         { ext: 'png' },
+  placeholder: { ext: 'svg' },
+};
 
 function resolveAssetUrls(assets) {
   if (assets && typeof assets === 'object' && !Array.isArray(assets)) {
-    return (filename) => {
-      const key = filename.replace(/\.svg$/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-      return assets[key] || assets[filename] || `assets/placeholder/${filename}`;
+    return (def) => {
+      const key = def.base.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      return assets[key] || assets[def.base] || `assets/owl/${def.base}.png`;
     };
   }
-  const preset = assets || 'placeholder';
-  return (filename) => `assets/${preset}/${filename}`;
+  const name = assets || 'owl';
+  const cfg = PRESETS[name] || { ext: 'png' };
+  return (def) => `assets/${name}/${def.base}.${cfg.ext}`;
 }
 
 export function buildRig(target, options = {}) {

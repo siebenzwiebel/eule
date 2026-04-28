@@ -64,5 +64,12 @@ Seven layers, all absolutely positioned in a square stage. Pivots:
 | lid-right   | 50% 0%           |
 | beak-jaw    | 50% 0%           |
 
-Replace `assets/placeholder/*.svg` with your cut-out PNGs (same filenames),
-or pass an explicit url map to the `Eule` constructor.
+### Assets
+
+The default preset is `assets/owl/` (PNGs derived from the original sketch with
+the circuit nodes stripped and split into layers). To swap in a different set,
+either drop replacements with the same basenames into `assets/owl/`, add a new
+preset folder and select it via `new Eule(target, { assets: 'mypreset' })`, or
+pass an explicit url map: `new Eule(target, { assets: { body: '/x/body.png',
+head: ..., wingLeft: ..., ... } })`. The `placeholder/` folder kept the early
+SVG stand-ins for reference.
