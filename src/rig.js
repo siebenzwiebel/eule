@@ -49,7 +49,7 @@ export function buildRig(target, options = {}) {
     img.className = `eule-layer ${def.cls}`;
     img.alt = '';
     img.draggable = false;
-    img.src = url(def.asset);
+    img.src = url(def);
     elements[def.key] = img;
 
     imgPromises.push(new Promise((resolve) => {
