@@ -5,7 +5,6 @@ const HOOKS = [
   ['pupilRight',  'eule-pupil-right'],
   ['lidLeft',     'eule-lid-left'],
   ['lidRight',    'eule-lid-right'],
-  ['trace',       'eule-trace'],
 ];
 
 const DEFAULT_SVG_URL = 'assets/owl/eule.svg';
@@ -39,15 +38,12 @@ export function buildRig(target, options = {}) {
     svgEl.removeAttribute('height');
 
     // Tight square viewBox around the actual content so the owl is centered
-    // inside the stage and nothing renders outside it.
-    document.body.appendChild(svgEl); // getBBox needs the element to be in the DOM
-    const root = svgEl.getElementById('eule-root');
-    const bb = root.getBBox();
+    // in the stage. SVG is already in the DOM via target.appendChild(stage).
+    const bb = svgEl.getElementById('eule-root').getBBox();
     const side = Math.max(bb.width, bb.height) * 1.05;
     const cx = bb.x + bb.width / 2;
     const cy = bb.y + bb.height / 2;
     svgEl.setAttribute('viewBox', `${cx - side / 2} ${cy - side / 2} ${side} ${side}`);
-    stage.appendChild(svgEl);
 
     return svgEl;
   });

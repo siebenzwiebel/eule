@@ -66,19 +66,21 @@ export class Eule {
    *
    * @param {object} opts
    * @param {string[]} opts.idleAnims   Animations to pick from randomly. Default: nod, headTilt, shake.
-   * @param {number}   opts.interval    ms between idle animations. Default: 1500.
-   * @param {number}   opts.duration    Total idle phase duration in ms. Default: 8000.
+   * @param {number}   opts.interval    ms between idle animations. Default: 1100.
+   * @param {number}   opts.duration    Total idle phase duration in ms. Default: 9500.
    * @param {number}   opts.flyInAngle  Arrival angle in degrees. Default: 135.
    * @param {number}   opts.flyOutAngle Departure angle in degrees. Default: 45.
+   * @param {number}   opts.jitter      Random ± ms added to each idle gap. Default: 250.
    */
   async cycle(opts = {}) {
     await this.ready;
     const {
       idleAnims = ['nod', 'headTilt', 'shake'],
-      interval  = 1500,
-      duration  = 8000,
+      interval  = 1100,
+      duration  = 9500,
       flyInAngle  = 135,
       flyOutAngle = 45,
+      jitter      = 250,
     } = opts;
 
     const token = ++this._cycleToken;
@@ -93,7 +95,8 @@ export class Eule {
       const t0 = Date.now();
       await this.play(name);
       if (!alive()) return;
-      const gap = interval - (Date.now() - t0);
+      const wobble = jitter ? (Math.random() * 2 - 1) * jitter : 0;
+      const gap = interval + wobble - (Date.now() - t0);
       if (gap > 0) await sleep(gap);
     }
 

@@ -20,6 +20,12 @@
 .eule-svg [id^="eule-"] {
   transform-box: view-box;
   transform-origin: 50% 50%;
+}
+
+/* Hint compositor only on elements actually animated. */
+.eule-svg #eule-root,
+.eule-svg #eule-lid-left,
+.eule-svg #eule-lid-right {
   will-change: transform, opacity;
 }
 
