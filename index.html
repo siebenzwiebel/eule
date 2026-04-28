@@ -10,12 +10,21 @@
     html, body {
       width: 100%; height: 100%;
       background: #111;
+      overflow: hidden;
+    }
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
-    #mount { width: 100vmin; height: 100vmin; }
+    #mount {
+      /* Centering wrapper so CSS transform on stage works from viewport center */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
     /* White owl on dark background */
     .eule-svg { filter: invert(1); }
   </style>
@@ -25,8 +34,9 @@
   <script type="module">
     import { Eule } from './src/eule.js';
 
+    // 65% of the shorter viewport edge — large but not riesig
     const eule = new Eule(document.getElementById('mount'), {
-      size: Math.min(window.innerWidth, window.innerHeight),
+      size: Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.65),
     });
     window.eule = eule;
     await eule.ready;

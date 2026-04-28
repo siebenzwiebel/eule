@@ -76,8 +76,9 @@ export const ANIMATIONS = {
 
   landIn: {
     build(rig, { angle = 135, distance } = {}) {
-      // Default: enough to clear any viewport size
-      const d = distance ?? Math.max(window.innerWidth, window.innerHeight) * 1.5;
+      // Distance from viewport center to fully clear the stage off-screen
+      const stageSize = Math.max(rig.stage.offsetWidth, rig.stage.offsetHeight);
+      const d = distance ?? (Math.hypot(window.innerWidth, window.innerHeight) / 2 + stageSize);
       const rad = angle * Math.PI / 180;
       const dx = Math.cos(rad) * d;
       const dy = -Math.sin(rad) * d;
@@ -96,7 +97,8 @@ export const ANIMATIONS = {
 
   flyOut: {
     build(rig, { angle = 45, distance } = {}) {
-      const d = distance ?? Math.max(window.innerWidth, window.innerHeight) * 1.5;
+      const stageSize = Math.max(rig.stage.offsetWidth, rig.stage.offsetHeight);
+      const d = distance ?? (Math.hypot(window.innerWidth, window.innerHeight) / 2 + stageSize);
       const rad = angle * Math.PI / 180;
       const dx = Math.cos(rad) * d;
       const dy = -Math.sin(rad) * d;
