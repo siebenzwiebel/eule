@@ -64,6 +64,21 @@
       <fieldset>
         <legend>aktion</legend>
         <div class="row" id="anim-action"></div>
+        <div class="dial-row">
+          <div class="dial">
+            <svg viewBox="-50 -50 100 100" id="dial-svg">
+              <circle r="44" fill="none" stroke="#dcdcdc" stroke-width="2"/>
+              <circle r="3" fill="#888"/>
+              <line id="dial-needle" x1="0" y1="0" x2="40" y2="0"
+                    stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <label>
+            winkel
+            <input type="range" id="fly-angle" min="0" max="359" value="135">
+            <output id="fly-angle-out">135°</output>
+          </label>
+        </div>
       </fieldset>
 
       <fieldset>

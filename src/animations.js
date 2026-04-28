@@ -22,11 +22,10 @@ export const ANIMATIONS = {
   blink: {
     build(rig) {
       const kf = [
-        { transform: 'scaleY(0)', opacity: 0 },
-        { transform: 'scaleY(0.5)', opacity: 1, offset: 0.15 },
+        { transform: 'scaleY(0)', opacity: 1 },
         { transform: 'scaleY(1)', opacity: 1, offset: 0.45 },
-        { transform: 'scaleY(0.5)', opacity: 1, offset: 0.75 },
-        { transform: 'scaleY(0)', opacity: 0 },
+        { transform: 'scaleY(1)', opacity: 1, offset: 0.55 },
+        { transform: 'scaleY(0)', opacity: 1 },
       ];
       const opts = { duration: 220, easing: SNAP };
       return [rig.lidLeft.animate(kf, opts), rig.lidRight.animate(kf, opts)];
@@ -248,27 +247,34 @@ export const ANIMATIONS = {
   },
 
   landIn: {
-    build(rig) {
+    build(rig, { angle = 135, distance = 360 } = {}) {
+      const rad = angle * Math.PI / 180;
+      const dx = Math.cos(rad) * distance;
+      const dy = -Math.sin(rad) * distance;
+      const mx = dx * 0.45;
+      const my = dy * 0.45;
       return [
         rig.stage.animate([
-          { transform: 'translate(-220px,-260px) scale(0.6)', opacity: 0 },
-          { transform: 'translate(-160px,-180px) scale(0.7)', opacity: 1, offset: 0.25 },
-          { transform: 'translate(-40px,-30px) scale(0.95)',  offset: 0.7 },
-          { transform: 'translate(0,12px) scale(1.04)',       offset: 0.88 },
-          { transform: 'translate(0,0) scale(1)',             offset: 1 },
+          { transform: `translate(${dx}px,${dy}px) scale(0.6)`, opacity: 0 },
+          { transform: `translate(${mx}px,${my}px) scale(0.78)`, opacity: 1, offset: 0.3 },
+          { transform: 'translate(0,12px) scale(1.04)',          offset: 0.88 },
+          { transform: 'translate(0,0) scale(1)',                offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
       ];
     },
   },
 
   flyOut: {
-    build(rig) {
+    build(rig, { angle = 45, distance = 360 } = {}) {
+      const rad = angle * Math.PI / 180;
+      const dx = Math.cos(rad) * distance;
+      const dy = -Math.sin(rad) * distance;
       return [
         rig.stage.animate([
-          { transform: 'translate(0,0) scale(1)',             opacity: 1 },
-          { transform: 'translate(20px,-20px) scale(1.02)',   offset: 0.15 },
-          { transform: 'translate(140px,-160px) scale(0.85)', offset: 0.6 },
-          { transform: 'translate(280px,-300px) scale(0.55)', opacity: 0, offset: 1 },
+          { transform: 'translate(0,0) scale(1)',                            opacity: 1 },
+          { transform: `translate(${dx * 0.08}px,${dy * 0.08}px) scale(1.04)`, offset: 0.15 },
+          { transform: `translate(${dx * 0.5}px,${dy * 0.5}px) scale(0.82)`,  offset: 0.6 },
+          { transform: `translate(${dx}px,${dy}px) scale(0.5)`,               opacity: 0, offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
       ];
     },
@@ -279,14 +285,14 @@ export const ANIMATIONS = {
     build(rig) {
       return [
         rig.lidLeft.animate(
-          [{ transform: 'scaleY(0)', opacity: 0 },
-           { transform: 'scaleY(1)', opacity: 1 }],
-          { duration: 600, fill: 'forwards', easing: SOFT }
+          [{ transform: 'scaleY(0)', opacity: 1 },
+           { transform: 'scaleY(0.7)', opacity: 1 }],
+          { duration: 700, fill: 'forwards', easing: SOFT }
         ),
         rig.lidRight.animate(
-          [{ transform: 'scaleY(0)', opacity: 0 },
-           { transform: 'scaleY(1)', opacity: 1 }],
-          { duration: 600, fill: 'forwards', easing: SOFT }
+          [{ transform: 'scaleY(0)', opacity: 1 },
+           { transform: 'scaleY(0.7)', opacity: 1 }],
+          { duration: 700, fill: 'forwards', easing: SOFT }
         ),
         rig.root.animate(
           triple('scaleY(1) translateY(0)',
@@ -302,10 +308,19 @@ export const ANIMATIONS = {
     loop: true,
     build(rig) {
       return [
+        rig.silhouette.animate(
+          [{ opacity: 1 }, { opacity: 0, offset: 0.15 },
+           { opacity: 0, offset: 0.85 }, { opacity: 1 }],
+          { duration: 4200, iterations: Infinity, easing: 'ease-in-out' }
+        ),
         rig.trace.animate([
-          { strokeDasharray: '14 86', strokeDashoffset: 0,    opacity: 0.85 },
-          { strokeDasharray: '14 86', strokeDashoffset: -100, opacity: 0.85 },
-        ], { duration: 2200, iterations: Infinity, easing: 'linear', fill: 'both' }),
+          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 0,    stroke: 'hsl(190 90% 60%)' },
+          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 1,    stroke: 'hsl(190 90% 60%)', offset: 0.05 },
+          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1,    stroke: 'hsl(310 90% 65%)', offset: 0.5 },
+          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1,    stroke: 'hsl(45 95% 55%)',  offset: 0.85 },
+          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 0,    stroke: 'hsl(45 95% 55%)',  offset: 0.95 },
+          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 0,    stroke: 'hsl(190 90% 60%)' },
+        ], { duration: 4200, iterations: Infinity, easing: 'cubic-bezier(.6,0,.4,1)', fill: 'both' }),
       ];
     },
   },
