@@ -9,7 +9,7 @@ export const ANIMATIONS = {
     loop: true,
     build(rig) {
       return [
-        rig.silhouette.animate(
+        rig.root.animate(
           triple('scaleY(1) translateY(0)',
                  'scaleY(1.018) translateY(-1.5px)',
                  'scaleY(1) translateY(0)'),
@@ -36,7 +36,7 @@ export const ANIMATIONS = {
   headTurn: {
     build(rig, { direction = 'left' } = {}) {
       const sign = direction === 'right' ? 1 : -1;
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateX(0) scaleX(1)' },
         { transform: `translateX(${sign * 14}px) scaleX(0.95)`, offset: 0.45 },
         { transform: `translateX(${sign * 14}px) scaleX(0.95)`, offset: 0.7 },
@@ -48,7 +48,7 @@ export const ANIMATIONS = {
   headTilt: {
     build(rig, { direction = 'left', degrees = 8 } = {}) {
       const sign = direction === 'right' ? 1 : -1;
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'rotate(0deg)' },
         { transform: `rotate(${sign * degrees}deg)`, offset: 0.4 },
         { transform: `rotate(${sign * degrees}deg)`, offset: 0.7 },
@@ -59,7 +59,7 @@ export const ANIMATIONS = {
 
   nod: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateY(0) rotate(0)' },
         { transform: 'translateY(-4px) rotate(-3deg)', offset: 0.25 },
         { transform: 'translateY(7px) rotate(4deg)',   offset: 0.55 },
@@ -71,7 +71,7 @@ export const ANIMATIONS = {
 
   shake: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateX(0) rotate(0)' },
         { transform: 'translateX(-9px) rotate(-3deg)', offset: 0.2 },
         { transform: 'translateX(9px) rotate(3deg)',   offset: 0.45 },
@@ -83,7 +83,7 @@ export const ANIMATIONS = {
 
   lookUp: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateY(0)' },
         { transform: 'translateY(-9px)', offset: 0.4 },
         { transform: 'translateY(-9px)', offset: 0.7 },
@@ -94,7 +94,7 @@ export const ANIMATIONS = {
 
   lookDown: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateY(0)' },
         { transform: 'translateY(10px)', offset: 0.4 },
         { transform: 'translateY(10px)', offset: 0.7 },
@@ -105,7 +105,7 @@ export const ANIMATIONS = {
 
   preen: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translate(0,0) rotate(0)' },
         { transform: 'translate(20px,8px) rotate(10deg)', offset: 0.35 },
         { transform: 'translate(22px,10px) rotate(12deg)', offset: 0.55 },
@@ -117,20 +117,18 @@ export const ANIMATIONS = {
 
   yawn: {
     build(rig) {
-      return [
-        rig.silhouette.animate([
-          { transform: 'scale(1, 1) rotate(0)' },
-          { transform: 'scale(1.04, 1.06) rotate(-2deg)', offset: 0.4 },
-          { transform: 'scale(1.04, 1.06) rotate(-2deg)', offset: 0.7 },
-          { transform: 'scale(1, 1) rotate(0)' },
-        ], { duration: 1000, easing: SOFT }),
-      ];
+      return [rig.root.animate([
+        { transform: 'scale(1, 1) rotate(0)' },
+        { transform: 'scale(1.04, 1.06) rotate(-2deg)', offset: 0.4 },
+        { transform: 'scale(1.04, 1.06) rotate(-2deg)', offset: 0.7 },
+        { transform: 'scale(1, 1) rotate(0)' },
+      ], { duration: 1000, easing: SOFT })];
     },
   },
 
   shiver: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateX(0)' },
         { transform: 'translateX(-3px)', offset: 0.15 },
         { transform: 'translateX(3px)',  offset: 0.3 },
@@ -144,7 +142,7 @@ export const ANIMATIONS = {
 
   alert: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'scaleY(1) translateY(0)' },
         { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.35 },
         { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.75 },
@@ -155,7 +153,7 @@ export const ANIMATIONS = {
 
   wingFlutter: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'scaleX(1)' },
         { transform: 'scaleX(1.05)', offset: 0.18 },
         { transform: 'scaleX(0.97)', offset: 0.36 },
@@ -169,7 +167,7 @@ export const ANIMATIONS = {
   wingStretch: {
     build(rig, { side = 'left' } = {}) {
       const sign = side === 'right' ? 1 : -1;
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'skewX(0) translateX(0)' },
         { transform: `skewX(${sign * 6}deg) translateX(${sign * 6}px)`, offset: 0.4 },
         { transform: `skewX(${sign * 6}deg) translateX(${sign * 6}px)`, offset: 0.7 },
@@ -198,14 +196,14 @@ export const ANIMATIONS = {
       const opts = { duration: 700, easing: SOFT };
       return [
         rig.stage.animate(lift, opts),
-        rig.silhouette.animate(squash, opts),
+        rig.root.animate(squash, opts),
       ];
     },
   },
 
   bow: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'translateY(0) rotate(0)' },
         { transform: 'translateY(10px) rotate(8deg)', offset: 0.45 },
         { transform: 'translateY(10px) rotate(8deg)', offset: 0.7 },
@@ -216,7 +214,7 @@ export const ANIMATIONS = {
 
   deepBreath: {
     build(rig) {
-      return [rig.silhouette.animate([
+      return [rig.root.animate([
         { transform: 'scaleY(1) translateY(0)' },
         { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.45 },
         { transform: 'scaleY(1.06) translateY(-5px)', offset: 0.55 },
@@ -243,7 +241,7 @@ export const ANIMATIONS = {
       ];
       return [
         rig.stage.animate(path, { duration: 1900, easing: SOFT }),
-        rig.silhouette.animate(wobble,
+        rig.root.animate(wobble,
           { duration: 380, iterations: 5, easing: SOFT }),
       ];
     },
@@ -290,12 +288,24 @@ export const ANIMATIONS = {
            { transform: 'scaleY(1)', opacity: 1 }],
           { duration: 600, fill: 'forwards', easing: SOFT }
         ),
-        rig.silhouette.animate(
+        rig.root.animate(
           triple('scaleY(1) translateY(0)',
                  'scaleY(1.012) translateY(-1px)',
                  'scaleY(1) translateY(0)'),
           { duration: 4200, iterations: Infinity, easing: 'ease-in-out' }
         ),
+      ];
+    },
+  },
+
+  trace: {
+    loop: true,
+    build(rig) {
+      return [
+        rig.trace.animate([
+          { strokeDasharray: '14 86', strokeDashoffset: 0,    opacity: 0.85 },
+          { strokeDasharray: '14 86', strokeDashoffset: -100, opacity: 0.85 },
+        ], { duration: 2200, iterations: Infinity, easing: 'linear', fill: 'both' }),
       ];
     },
   },

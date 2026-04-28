@@ -5,6 +5,7 @@ const HOOKS = [
   ['pupilRight',  'eule-pupil-right'],
   ['lidLeft',     'eule-lid-left'],
   ['lidRight',    'eule-lid-right'],
+  ['trace',       'eule-trace'],
 ];
 
 const DEFAULT_SVG_URL = 'assets/owl/eule.svg';
@@ -49,7 +50,7 @@ export function buildRig(target, options = {}) {
     for (const [key, id] of HOOKS) {
       rig[key] = svgEl.getElementById(id);
     }
-    rig.body = rig.silhouette;
+    rig.body = rig.root;
     return rig;
   });
 

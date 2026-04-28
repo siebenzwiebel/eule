@@ -4,7 +4,7 @@ const GROUPS = {
   head:   ['blink', 'headTurn', 'headTilt', 'nod', 'shake', 'lookUp', 'lookDown'],
   char:   ['preen', 'yawn', 'shiver', 'alert'],
   action: ['wingFlutter', 'flight', 'landIn', 'flyOut'],
-  accent: ['wingStretch', 'hop', 'bow', 'deepBreath'],
+  accent: ['wingStretch', 'hop', 'bow', 'deepBreath', 'trace'],
 };
 
 const mount = document.getElementById('owl-mount');
