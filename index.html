@@ -3,100 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>eule · studio</title>
+  <title>eule</title>
   <link rel="stylesheet" href="src/style.css">
-  <link rel="stylesheet" href="studio.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #mount {
+      width: 100vmin;
+      height: 100vmin;
+    }
+  </style>
 </head>
-<body data-bg="checker">
-  <header class="topbar">
-    <h1>eule · studio</h1>
-    <div class="muted">layered owl with a programmatic animation API</div>
-  </header>
+<body>
+  <div id="mount"></div>
+  <script type="module">
+    import { Eule } from './src/eule.js';
 
-  <main class="layout">
-    <section class="stage-wrap">
-      <div id="stage-bg" class="stage-bg">
-        <div id="owl-mount"></div>
-      </div>
-    </section>
+    const eule = new Eule(document.getElementById('mount'), { size: Math.min(window.innerWidth, window.innerHeight) });
+    window.eule = eule;
 
-    <aside class="controls">
-      <fieldset>
-        <legend>size</legend>
-        <input id="size" type="range" min="100" max="1000" value="480" step="10">
-        <output id="size-out">480px</output>
-      </fieldset>
-
-      <fieldset>
-        <legend>background</legend>
-        <div class="row">
-          <button data-bg="checker" class="active">checker</button>
-          <button data-bg="white">white</button>
-          <button data-bg="black">black</button>
-          <button data-bg="photo">photo</button>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>debug</legend>
-        <label><input type="checkbox" id="debug"> show layer outlines</label>
-      </fieldset>
-
-      <fieldset>
-        <legend>loops</legend>
-        <div class="row">
-          <button data-loop="idle">idle</button>
-          <button data-loop="sleep">sleep</button>
-          <button data-loop="stop">stop</button>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>head</legend>
-        <div class="row" id="anim-head"></div>
-      </fieldset>
-
-      <fieldset>
-        <legend>charakter</legend>
-        <div class="row" id="anim-char"></div>
-      </fieldset>
-
-      <fieldset>
-        <legend>aktion</legend>
-        <div class="row" id="anim-action"></div>
-        <div class="dial-row">
-          <div class="dial">
-            <svg viewBox="-50 -50 100 100" id="dial-svg">
-              <circle r="44" fill="none" stroke="#dcdcdc" stroke-width="2"/>
-              <circle r="3" fill="#888"/>
-              <line id="dial-needle" x1="0" y1="0" x2="40" y2="0"
-                    stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <label>
-            winkel
-            <input type="range" id="fly-angle" min="0" max="359" value="135">
-            <output id="fly-angle-out">135°</output>
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>akzente</legend>
-        <div class="row" id="anim-accent"></div>
-      </fieldset>
-
-      <fieldset>
-        <legend>ketten</legend>
-        <div class="row">
-          <button data-chain="alert,headTilt,blink,blink">alert → tilt → blink²</button>
-          <button data-chain="hop,wingFlutter,nod">hop → flutter → nod</button>
-          <button data-chain="landIn,headTurn,flyOut">landIn → look → flyOut</button>
-        </div>
-      </fieldset>
-    </aside>
-  </main>
-
-  <script type="module" src="studio.js"></script>
+    await eule.ready;
+    eule.cycle();
+  </script>
 </body>
 </html>

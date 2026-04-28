@@ -25,10 +25,14 @@
 
 .eule-svg #eule-root        { transform-origin: 391px 450px; }
 .eule-svg #eule-silhouette  { transform-origin: 391px 450px; }
-.eule-svg #eule-pupil-left  { transform-origin: 210px 350px; }
-.eule-svg #eule-pupil-right { transform-origin: 440px 347px; }
-.eule-svg #eule-lid-left    { transform-origin: 210px 296px; }
-.eule-svg #eule-lid-right   { transform-origin: 440px 295px; }
+
+/* Lids live inside the y-flipped group (scale(1,-1)), so "bottom" in
+   fill-box PS space = visual top in screen space. scaleY expands down. */
+.eule-svg #eule-lid-left,
+.eule-svg #eule-lid-right {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
 
 .eule-stage[data-debug="true"] .eule-svg [id^="eule-"] {
   outline: 1px dashed rgba(255, 64, 129, 0.55);

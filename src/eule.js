@@ -1,15 +1,18 @@
 import { buildRig } from './rig.js';
 import { ANIMATIONS, ANIMATION_NAMES } from './animations.js';
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 export class Eule {
   constructor(target, options = {}) {
     if (!target) throw new Error('Eule: target element required');
-    this._opts = { idleOnReady: true, ...options };
+    this._opts = { idleOnReady: false, ...options };
     this._rig = buildRig(target, options);
     this._loopAnims = [];
     this._loopName = null;
     this._sceneAnims = [];
     this._sceneToken = 0;
+    this._cycleToken = 0;
 
     this.ready = this._rig.ready.then(() => {
       if (this._opts.idleOnReady) this._startLoop('idle');
@@ -26,20 +29,9 @@ export class Eule {
     this._rig.stage.dataset.debug = on ? 'true' : 'false';
   }
 
-  async idle() {
-    await this.ready;
-    if (this._loopName === 'idle') return;
-    this._startLoop('idle');
-  }
-
-  async sleep() {
-    await this.ready;
-    if (this._loopName === 'sleep') return;
-    this._startLoop('sleep');
-  }
-
   async stop() {
     await this.ready;
+    this._cycleToken++;
     this._cancelLoop();
     this._cancelScene();
   }
@@ -48,13 +40,7 @@ export class Eule {
     await this.ready;
     const def = ANIMATIONS[name];
     if (!def) throw new Error(`Eule: unknown animation '${name}'`);
-    if (def.loop) {
-      this._cancelScene();
-      this._startLoop(name, opts);
-      return;
-    }
 
-    const previousLoop = this._loopName;
     this._cancelLoop();
     this._cancelScene();
 
@@ -67,18 +53,48 @@ export class Eule {
     } finally {
       if (token === this._sceneToken) {
         this._sceneAnims = [];
-        if (previousLoop && previousLoop !== 'sleep' && !this._loopName) {
-          this._startLoop(previousLoop);
-        }
       }
     }
   }
 
-  async chain(names, sharedOpts = {}) {
-    for (const entry of names) {
-      const [name, opts] = Array.isArray(entry) ? entry : [entry, sharedOpts];
-      await this.play(name, opts);
+  /**
+   * Run a full flyIn → idle → flyOut cycle.
+   *
+   * @param {object} opts
+   * @param {string[]} opts.idleAnims   Animations to pick from randomly. Default: nod, headTilt, shake.
+   * @param {number}   opts.interval    ms between idle animations. Default: 1500.
+   * @param {number}   opts.duration    Total idle phase duration in ms. Default: 8000.
+   * @param {number}   opts.flyInAngle  Arrival angle in degrees. Default: 135.
+   * @param {number}   opts.flyOutAngle Departure angle in degrees. Default: 45.
+   */
+  async cycle(opts = {}) {
+    await this.ready;
+    const {
+      idleAnims = ['nod', 'headTilt', 'shake'],
+      interval  = 1500,
+      duration  = 8000,
+      flyInAngle  = 135,
+      flyOutAngle = 45,
+    } = opts;
+
+    const token = ++this._cycleToken;
+    const alive = () => this._cycleToken === token;
+
+    await this.play('landIn', { angle: flyInAngle });
+    if (!alive()) return;
+
+    const deadline = Date.now() + duration;
+    while (Date.now() < deadline && alive()) {
+      const name = idleAnims[Math.floor(Math.random() * idleAnims.length)];
+      const t0 = Date.now();
+      await this.play(name);
+      if (!alive()) return;
+      const gap = interval - (Date.now() - t0);
+      if (gap > 0) await sleep(gap);
     }
+
+    if (!alive()) return;
+    await this.play('flyOut', { angle: flyOutAngle });
   }
 
   _startLoop(name, opts = {}) {
