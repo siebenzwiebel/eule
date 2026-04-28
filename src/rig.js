@@ -29,7 +29,7 @@ function resolveAssetUrls(assets) {
 export function buildRig(target, options = {}) {
   const {
     size = 480,
-    assets = 'placeholder',
+    assets = 'owl',
   } = options;
 
   const url = resolveAssetUrls(assets);
