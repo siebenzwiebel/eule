@@ -255,8 +255,8 @@ export const ANIMATIONS = {
       const my = dy * 0.45;
       return [
         rig.stage.animate([
-          { transform: `translate(${dx}px,${dy}px) scale(0.6)`, opacity: 0 },
-          { transform: `translate(${mx}px,${my}px) scale(0.78)`, opacity: 1, offset: 0.3 },
+          { transform: `translate(${dx}px,${dy}px) scale(0.6)` },
+          { transform: `translate(${mx}px,${my}px) scale(0.78)`, offset: 0.3 },
           { transform: 'translate(0,12px) scale(1.04)',          offset: 0.88 },
           { transform: 'translate(0,0) scale(1)',                offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
@@ -271,10 +271,10 @@ export const ANIMATIONS = {
       const dy = -Math.sin(rad) * distance;
       return [
         rig.stage.animate([
-          { transform: 'translate(0,0) scale(1)',                            opacity: 1 },
+          { transform: 'translate(0,0) scale(1)' },
           { transform: `translate(${dx * 0.08}px,${dy * 0.08}px) scale(1.04)`, offset: 0.15 },
           { transform: `translate(${dx * 0.5}px,${dy * 0.5}px) scale(0.82)`,  offset: 0.6 },
-          { transform: `translate(${dx}px,${dy}px) scale(0.5)`,               opacity: 0, offset: 1 },
+          { transform: `translate(${dx}px,${dy}px) scale(0.5)`,               offset: 1 },
         ], { duration: 1100, easing: SOFT, fill: 'forwards' }),
       ];
     },
@@ -308,18 +308,10 @@ export const ANIMATIONS = {
     loop: true,
     build(rig) {
       return [
-        rig.silhouette.animate(
-          [{ opacity: 1 }, { opacity: 0, offset: 0.15 },
-           { opacity: 0, offset: 0.85 }, { opacity: 1 }],
-          { duration: 4200, iterations: Infinity, easing: 'ease-in-out' }
-        ),
         rig.trace.animate([
-          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 0,    stroke: 'hsl(190 90% 60%)' },
-          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 1,    stroke: 'hsl(190 90% 60%)', offset: 0.05 },
-          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1,    stroke: 'hsl(310 90% 65%)', offset: 0.5 },
-          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1,    stroke: 'hsl(45 95% 55%)',  offset: 0.85 },
-          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 0,    stroke: 'hsl(45 95% 55%)',  offset: 0.95 },
-          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 0,    stroke: 'hsl(190 90% 60%)' },
+          { strokeDasharray: '100 100', strokeDashoffset: 100, opacity: 1, stroke: 'hsl(190 90% 60%)' },
+          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1, stroke: 'hsl(310 90% 65%)', offset: 0.5 },
+          { strokeDasharray: '100 100', strokeDashoffset: 0,   opacity: 1, stroke: 'hsl(45 95% 55%)',  offset: 1 },
         ], { duration: 4200, iterations: Infinity, easing: 'cubic-bezier(.6,0,.4,1)', fill: 'both' }),
       ];
     },
