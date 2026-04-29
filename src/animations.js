@@ -5,13 +5,15 @@ const EASE_OUT = 'cubic-bezier(.2, .7, .3, 1)';
 const EASE_IN  = 'cubic-bezier(.7, .2, 1, .7)';
 
 export const ANIMATIONS = {
-  // Close fast, open ~1.5x slower (asymmetric timing reads as natural blink).
+  // Lids are normally invisible (opacity:0, scaleY:0). Animation overrides
+  // opacity to 1 and animates scaleY 0 -> 1 (close) -> 0 (open).
+  // Close fast, open ~1.5x slower for natural-looking blink.
   blink: {
     build(rig) {
       const kf = [
-        { transform: 'scaleY(1)', easing: EASE_IN },
-        { transform: 'scaleY(0)', offset: 0.4, easing: EASE_OUT },
-        { transform: 'scaleY(1)' },
+        { transform: 'scaleY(0)', opacity: 1, easing: EASE_IN },
+        { transform: 'scaleY(1)', opacity: 1, offset: 0.4, easing: EASE_OUT },
+        { transform: 'scaleY(0)', opacity: 1 },
       ];
       const opts = { duration: 280 };
       return [rig.lidLeft.animate(kf, opts), rig.lidRight.animate(kf, opts)];
